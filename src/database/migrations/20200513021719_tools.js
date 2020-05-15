@@ -4,7 +4,8 @@ exports.up = function(knex) {
         table.string('title').notNullable();
         table.string('link').notNullable();
         table.string('description').notNullable();
-        table.timestamps();
+        table.integer('userId').unsigned().references('id').inTable('users').onDelete('CASCADE');
+        table.timestamps(true, true);
     });
 };
 

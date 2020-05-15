@@ -1,26 +1,12 @@
-const connection = require('../../database/connection')
+const Model = require('./Model');
 
-class User {
-    static async find(id) {
-        try{
-            const user = await connection('users').select('*').where('id', '=', id);
-            return user;
-        }
-        catch(err) {
-            console.error(err)
-            return null;
-        }
-    }
+class User extends Model {
+    static table = 'users'
+    static fields = ['name', 'email', 'password'];
+    static publicFields = ['id', ...this.fields];
 
-    static async create(data) {
-        try{
-            const userId = await connection('users').insert(data);
-            return await this.find(userId);
-        }
-        catch(err) {
-            console.error(err)
-            return null;
-        }
+    static async tools() {
+        return null;
     }
 }
 

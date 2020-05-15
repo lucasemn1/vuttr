@@ -8,6 +8,6 @@ module.exports = {
             return response.status(500).json({ message: "User cannot be created" })
         }
 
-        return response.status(201).json(user);
+        return response.status(201).json(user.data);
     }
 }

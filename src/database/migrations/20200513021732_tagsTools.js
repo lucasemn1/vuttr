@@ -3,7 +3,7 @@ exports.up = function (knex) {
         table.increments('id')
         table.integer('toolId').unsigned().references('id').inTable('tools').onDelete('CASCADE')
         table.integer('tagId').unsigned().references('id').inTable('tags').onDelete('CASCADE')
-        table.timestamps();
+        table.timestamps(true, true);
     });
 };
 
