@@ -2,14 +2,25 @@ const connection = require('../../database/connection')
 
 class User {
     static async find(id) {
-        const user = await connection().select('*').from('users').where('id', '=', id);
-        return user;
+        try{
+            const user = await connection('users').select('*').where('id', '=', id);
+            return user;
+        }
+        catch(err) {
+            console.error(err)
+            return null;
+        }
     }
 
     static async create(data) {
-        const userId = await connection('users').insert(data);
-
-        return this.find(userId);
+        try{
+            const userId = await connection('users').insert(data);
+            return await this.find(userId);
+        }
+        catch(err) {
+            console.error(err)
+            return null;
+        }
     }
 }
 

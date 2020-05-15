@@ -15,10 +15,13 @@
     "express": "^4.17.1",
     "jest": "^26.0.1",
     "knex": "^0.21.1",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "sqlite3": "^4.2.0",
+    "supertest": "^4.0.2"
   },
   "scripts": {
-    "start": "node src/index.js",
-    "dev": "nodemon src/index.js"
+    "start": "node src/server/index.js ",
+    "dev": "nodemon src/server/index.js --ignore tests",
+    "test": "NODE_ENV=test jest --detectOpenHandles"
   }
 }

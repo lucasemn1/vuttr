@@ -1,8 +1,24 @@
-require('dotenv').config();
-
 // Update with your config settings.
+const dotenv = require('dotenv')
+dotenv.config({
+  path: !process.env.DB_DATABASE ? '.env': '.env.test'
+})
 
 module.exports = {
+  test: {
+    client: 'sqlite',
+    connection: {
+      filename: `./src/database/${process.env.DB_DATABASE}.sqlite`
+    },
+    migrations: {
+      tableName: 'knex_migrations',
+      directory: './src/database/migrations'
+    },
+    seeds: {
+      directory: './src/database/seeds'
+    },
+  },
+
   development: {
     client: 'mysql',
     connection: {
@@ -15,7 +31,6 @@ module.exports = {
       directory: './src/database/migrations'
     },
     seeds: {
-
       directory: './src/database/seeds'
     }
   },
@@ -24,7 +39,7 @@ module.exports = {
     client: 'postgresql',
     connection: {
       database: 'my_db',
-      user:     'username',
+      user: 'username',
       password: 'password'
     },
     pool: {
@@ -40,7 +55,7 @@ module.exports = {
     client: 'postgresql',
     connection: {
       database: 'my_db',
-      user:     'username',
+      user: 'username',
       password: 'password'
     },
     pool: {

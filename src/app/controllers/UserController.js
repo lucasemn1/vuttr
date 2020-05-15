@@ -1,13 +1,13 @@
 const User = require('../models/User')
 
 module.exports = {
-    async store(req, res) {
-        const user = await User.create({
-            name: 'Lucas',
-            email: 'lucasi@gmail.com',
-            password: '123'
-        })
-    
-        return res.send(user)
+    async store(request, response) {
+        const user = await User.create(request.body)
+
+        if( !user ) {
+            return response.status(500).json({ message: "User cannot be created" })
+        }
+
+        return response.status(201).json(user);
     }
 }
