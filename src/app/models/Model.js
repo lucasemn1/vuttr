@@ -1,11 +1,31 @@
 const connection = require('../../database/connection')
 
 class Model {
-    static fields = []
-    static publicFields = []
+    static table = '';
+    static fields = [];
+    static publicFields = [];
 
     constructor(data) {
         this.data = data;
+    }
+
+    async save() {
+        try{
+            if(!this.data.id) {
+                return await Model.create(this.data);
+            }  
+            else {
+                await connection(Model.table)
+                    .where('id', '=', this.data.id)
+                    .update(this.data);
+                
+                return true;
+            }
+        }
+        catch(err) {
+            console.error(err)
+            return false;
+        }
     }
 
     static async all() {
