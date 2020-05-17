@@ -12,8 +12,9 @@ class Model {
     async save() {
         try{
             if(!this.data.id) {
+                console.log(this.data);
                 return await Model.create(this.data);
-            }  
+            }
             else {
                 await connection(Model.table)
                     .where('id', '=', this.data.id)
@@ -62,7 +63,6 @@ class Model {
 
     static async create(data) {
         try{
-
             const dataToSave = {}
 
             this.fields.map( field => {

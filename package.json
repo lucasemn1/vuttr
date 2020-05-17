@@ -14,6 +14,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "jest": "^26.0.1",
+    "jsonwebtoken": "^8.5.1",
     "knex": "^0.21.1",
     "mysql": "^2.18.1",
     "sqlite3": "^4.2.0",
@@ -22,6 +23,7 @@
   "scripts": {
     "start": "node src/server/index.js ",
     "dev": "nodemon src/server/index.js --ignore tests",
-    "test": "NODE_ENV=test jest --detectOpenHandles"
+    "test": "NODE_ENV=test jest --detectOpenHandles",
+    "generate:key": "node src/config/key.js"
   }
 }

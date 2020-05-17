@@ -1,12 +1,71 @@
 const Model = require('./Model');
+const { openConnection } = require('../../database/connection');
 
-class User extends Model {
-    static table = 'users'
-    static fields = ['name', 'email', 'password'];
-    static publicFields = ['id', ...this.fields];
+class User {
+    static async create(userData) {
+        const connection = openConnection();
 
-    static async tools() {
-        return null;
+        try{
+            const [ userId ] = await connection('users').insert(userData);
+            connection.destroy();
+            return userId;
+        }
+        catch(err) {
+            connection.destroy();
+            console.error(err);
+            return null;
+        }
+    }
+
+    static async find(userId) {
+        const connection = openConnection();
+
+        try{
+            const user = await connection('users')
+                .select('*')
+                .where('id', '=', userId)
+                .first();
+
+            connection.destroy();
+            return user;
+        }
+        catch(err) {
+            connection.destroy();
+            console.error(err);
+            return null;
+        }
+    }   
+
+    static async update(userData, userId) {
+        const connection = openConnection();
+
+        try{
+            await connection('users')
+                .where('id', '=', userId)
+                .update(userData);
+
+            const user = this.find(userId);
+            connection.destroy();
+
+            return user;
+        }
+        catch(err) {
+            connection.destroy();
+            console.error(err);
+            return null;
+        }
+    }
+
+    static async delete(userId) {
+        const connection = openConnection();
+
+        const result = await connection('users')
+            .where('id', '=', userId)
+            .delete();
+            
+        connection.destroy();
+
+        return result === 1 ? true: false;
     }
 }
 
