@@ -61,5 +61,5 @@ $ yarn start
 ## 💾 Modelo relacional do banco de dados.
 ![GitHub Logo](https://raw.githubusercontent.com/lucasemn1/vuttr/master/public/database_model.png)
 
-##### Desenvolvido com o coração por Lucas Emanuel Nascimento Nóbrega Dias 😁 (lucanobrega.js@gmail.com).
+##### Desenvolvido com o coração por Lucas Emanuel Nascimento Nóbrega Dias 😁 (lucasnobrega.js@gmail.com).
 ##### Visite meu [Linkedin! 🌐🗯](https://www.linkedin.com/in/lucas-emn/) 
