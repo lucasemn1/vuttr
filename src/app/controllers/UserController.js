@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const JWT = require('../models/JWT');
 
 module.exports = {
     async store(request, response) {
@@ -20,9 +21,7 @@ module.exports = {
     },
 
     async show(request, response) {
-        const userId = request.params.id;
-
-        const user = await User.find(userId);
+        const user = await JWT.getUser(request.headers.authorization);
 
         if( !user ) {
             return response.status(404).json({ message: "User was not found." })
@@ -32,24 +31,25 @@ module.exports = {
     },
 
     async update(request, response) {
-        const userId = request.params.id;
+
         const userData = {
             name: request.body.name,
             email: request.body.email,
             password: request.body.password
         }
 
+        const { userId } = JWT.getPayload(request.headers.authorization);
         const user = await User.update(userData, userId);
 
         if( !user ) {
             return response.status(404).json({ message: 'User was not found.' })
         }
 
-        return response.status(201).json(user);
+        return response.status(200).json(user);
     },
 
     async delete(request, response) {
-        const userId = request.params.id;
+        const { userId } = JWT.getPayload(request.headers.authorization);
 
         if( await User.delete(userId) ) {
             return response.status(200).json({});
