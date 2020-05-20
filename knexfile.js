@@ -1,7 +1,7 @@
 // Update with your config settings.
 const dotenv = require('dotenv')
 dotenv.config({
-  path: !process.env.DB_DATABASE ? '.env': '.env.test'
+  path: process.env.NODE_ENV !== 'test' ? '.env': '.env.test'
 })
 
 module.exports = {

@@ -12,7 +12,7 @@ class User {
         }
         catch(err) {
             connection.destroy();
-            console.error(err);
+            console.log(err);
             return null;
         }
     }
@@ -31,10 +31,30 @@ class User {
         }
         catch(err) {
             connection.destroy();
-            console.error(err);
+            console.log(err);
             return null;
         }
     }   
+
+    static async findWithCredentials(email, password) {
+        const connection = openConnection();
+
+        try{
+            const user = await connection('users')
+                .select('*')
+                .where('email', '=', email)
+                .where('password', 'LIKE', password)
+                .first();
+
+            connection.destroy();
+            return user;
+        }
+        catch(err) {
+            connection.destroy();
+            console.log(err);
+            return null;
+        }
+    }  
 
     static async update(userData, userId) {
         const connection = openConnection();
@@ -51,7 +71,7 @@ class User {
         }
         catch(err) {
             connection.destroy();
-            console.error(err);
+            console.log(err);
             return null;
         }
     }

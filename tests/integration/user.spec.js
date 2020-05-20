@@ -1,9 +1,9 @@
 const JWTModel = require('../../src/app/models/JWT');
 const UserModel = require('../../src/app/models/User');
 
-const factory = require('../../src/database/factory')
-const request = require('supertest')
-const app = require('../../src/server/app')
+const factory = require('../../src/database/factory');
+const request = require('supertest');
+const app = require('../../src/server/app');
 
 const { openConnection } = require('../../src/database/connection');
 const connection = openConnection();
@@ -13,8 +13,6 @@ describe('User', () => {
         email: 'teste123@gmail.com',
         password: '123'
     }
-
-    let user = null;
     let jwt = null;
 
     beforeAll(async (done) => {
@@ -29,46 +27,50 @@ describe('User', () => {
         done();
     });
 
-    it('Should create a user', async (done) => {
-        const userRandom = factory.user();
-        
+    it('Should create a user', async () => {
+        const userRandom = factory.user(constUserData);
+
         const response = await request(app)
             .post('/user')
             .send(userRandom)
-            .expect(201)
+            .set('Accept', 'application/json');
 
-            console.log(response.status);
-        // expect(response.status).toBe(201);
-        done();
+        expect(response.status).toBe(201);
     });
 
-    it('Should update a user', async (done) => {
+    it('Should update a user', async () => {
         const newRandomUser = factory.user(constUserData);
-        user = await UserModel.create(newRandomUser);
         jwt = await JWTModel.create(constUserData.email, constUserData.password);
         
         const response = await request(app)
             .put('/user')
             .send(newRandomUser)
             .set('Authorization', jwt.token)
-            .expect(201)
+            .set('Accept', 'application/json')
+            .expect('Content-Type', /json/);
 
-            console.log(response.status);
-        // expect(response.status).toBe(200);
-        done();
+        expect(response.body.name).toBe(newRandomUser.name);
+        expect(response.body.email).toBe(newRandomUser.email);
+        expect(response.status).toBe(200);
     });
 
-    it('Should show a user', async (done) => {
-        console.log(jwt);
-        console.log(user);
+    it('Should show a user', async () => {
         const response = await request(app)
             .get('/user')
             .set('Authorization', jwt.token)
-            .expect(201)
+            .set('Accept', 'application/json')
+            .expect('Content-Type', /json/);
 
-        console.log(response.status);
-        // expect(response.status).toBe(200);
-        done();
+        expect(response.status).toBe(200);
     });
 
+    it('Should delete a user', async () => {
+        const response = await request(app)
+            .delete('/user')
+            .set('Authorization', jwt.token)
+            .set('Accept', 'application/json')
+            .expect('Content-Type', /json/);
+
+        expect(response.status).toBe(200);
+    });
 })

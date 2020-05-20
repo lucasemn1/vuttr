@@ -6,11 +6,7 @@ class JWT {
     static async create(email, password) {
         const connection = openConnection();
 
-        const user = await connection('users')
-            .select('*')
-            .where('email', '=', email)
-            .where('password', 'LIKE', password)
-            .first();
+        const user = await User.findWithCredentials(email, password)
         
         const privateKey = process.env.APP_KEY;
 
