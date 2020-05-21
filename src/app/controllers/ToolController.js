@@ -6,7 +6,24 @@ const Tag = require('../models/Tag');
 module.exports = {
     async index(request, response) {
         const { userId } = jwt.decode(request.headers.authorization);
-        const tools = await Tool.all(userId);
+        const tagToSearch = request.query.tag;
+        let tools = [];
+
+        if(!tagToSearch) {
+            tools = await Tool.all(userId);
+        }
+        else {
+            tools = await Tool.findByTag(tagToSearch, userId);
+        }
+
+        for(const tool of tools) {
+            const tags = await Tool.findTags(tool.id);
+            tool.tags = [];
+
+            for(const tag of tags) {
+                tool.tags.push(tag.tag);
+            }
+        }
 
         return response.status(200).json(tools);
     },

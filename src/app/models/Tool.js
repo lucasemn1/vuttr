@@ -61,14 +61,40 @@ class Tool {
         const connection = openConnection();
         try{
             const tools = await connection('tools')
-                .select('tools.*')
+                .select([
+                    'tools.id',
+                    'tools.title',
+                    'tools.link',
+                    'tools.description',
+                ])
+                .join('tagsTools', 'tagsTools.toolId', 'tools.id')
+                .join('tags', 'tags.id', 'tagsTools.tagId')
+                .where('tags.tag', '=', tag)
                 .where('tools.userId', '=', userId)
-                .where('tools.id', '=', 'tagsTools.toolId')
-                .where('tagTools.id', '=', 'tags.id')
-                .where('tags.tag', 'LIKE', tag);
 
             connection.destroy();
             return tools;
+        }
+        catch(err){
+            connection.destroy();
+            console.log(err)
+            return null;
+        }
+    }
+
+    static async findTags(toolId) {
+        const connection = openConnection();
+        try{
+            const tags = await connection('tags')
+                .select([
+                    'tags.tag',
+                ])
+                .join('tagsTools', 'tagsTools.tagId', 'tags.id')
+                .join('tools', 'tagsTools.toolId', 'tools.id')
+                .where('tools.id', '=', toolId);
+
+            connection.destroy();
+            return tags;
         }
         catch(err){
             connection.destroy();
