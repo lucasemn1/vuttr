@@ -1,4 +1,3 @@
-const Model = require('./Model');
 const { openConnection } = require('../../database/connection');
 
 class User {
