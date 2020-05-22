@@ -5,7 +5,12 @@ class Tool {
         const connection = openConnection();
         try{
             const tools = await connection('tools')
-                .select('*')
+                .select([
+                    'id',
+                    'title',
+                    'link',
+                    'description'
+                ])
                 .where('tools.userId', '=', userId);
 
             connection.destroy();
@@ -111,7 +116,8 @@ class Tool {
                 .where('tools.userId', '=', userId)
                 .where('tools.id', '=', toolId)
                 .del();
-
+            
+            connection.destroy();
             return result === 1? true: false;
         }
         catch(err){

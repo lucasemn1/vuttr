@@ -62,7 +62,7 @@ module.exports = {
 
         const result = await Tool.delete(toolId, userId);
 
-        if(result) {
+        if(!result) {
             return response.status(500).json({ message: "Couldn't delete the tool." });
         }
 

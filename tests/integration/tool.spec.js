@@ -55,6 +55,7 @@ describe('User', () => {
             .expect('Content-Type', /json/);
 
         expect(response.body.title).toBe(toolRandom.title);
+        expect(response.status).toBe(201);
         for(let i = 0; i<response.body.tags; i++) {
             expect(response.body.tags[i]).toBe(toolRandom.tags[i]);
         }
@@ -68,6 +69,7 @@ describe('User', () => {
             .expect('Content-Type', /json/);
 
         expect(response.body.length).toBe(1);
+        expect(response.status).toBe(200);
     });
 
     it('Not should list tools of this user with informed tag', async () => {
@@ -78,5 +80,16 @@ describe('User', () => {
             .expect('Content-Type', /json/);
 
         expect(response.body.length).toBe(0);
+        expect(response.status).toBe(200);
+    });
+
+    it('Should delete a tool', async () => {
+        const response = await request(app)
+            .delete(`/tools/1`)
+            .set('Authorization', jwt.token)
+            .set('Accept', 'application/json')
+            .expect('Content-Type', /json/);
+
+        expect(response.status).toBe(200);
     });
 })
