@@ -18,6 +18,7 @@ module.exports = {
 
         for(const tool of tools) {
             const tags = await Tool.findTags(tool.id);
+
             tool.tags = [];
 
             for(const tag of tags) {
@@ -34,11 +35,11 @@ module.exports = {
         const tool = await Tool.find(toolId, userId);
 
         if( !tool ) {
-            return response.status(500).json({ message: "Tool cannot be created" })
+            console.log(`TOOL: ${tool}`)
+            return response.status(500).json({ message: "Tool cannot be created." })
         }
 
         const { tags } = request.body;
-
 
         for(const tag of tags) {
             let tagId = await Tag.tagExists(tag);
@@ -47,11 +48,24 @@ module.exports = {
                 tagId = await Tag.create(tag);
             }
 
-            const relationShipId = await Tag.registreTagsTools(tagId, toolId);
-            console.log(relationShipId);
+
+            await Tag.registreTagsTools(tagId, toolId);
         };
 
         tool.tags = tags;
         return response.status(201).json(tool);
     },
+
+    async destroy(request, response) {
+        const { userId } = jwt.decode(request.headers.authorization);
+        const toolId = request.params.id;
+
+        const result = await Tool.delete(toolId, userId);
+
+        if(result) {
+            return response.status(500).json({ message: "Couldn't delete the tool." });
+        }
+
+        return response.status(200).json({});
+    }
 }

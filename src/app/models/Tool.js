@@ -21,7 +21,7 @@ class Tool {
     static async create(toolData, userId) {
         const connection = openConnection();
         try{
-            const id = await connection('tools')
+            const [id] = await connection('tools')
                 .insert({
                     title: toolData.title,
                     link: toolData.link,
@@ -45,7 +45,8 @@ class Tool {
             const tool = await connection('tools')
                 .select('*')
                 .where('tools.id', '=', toolId)
-                .where('tools.userId', '=', userId);
+                .where('tools.userId', '=', userId)
+                .first();
 
             connection.destroy();
             return tool;
@@ -95,6 +96,23 @@ class Tool {
 
             connection.destroy();
             return tags;
+        }
+        catch(err){
+            connection.destroy();
+            console.log(err)
+            return null;
+        }
+    }
+
+    static async delete(toolId, userId) {
+        const connection = openConnection();
+        try{
+            const result = await connection('tools')
+                .where('tools.userId', '=', userId)
+                .where('tools.id', '=', toolId)
+                .del();
+
+            return result === 1? true: false;
         }
         catch(err){
             connection.destroy();

@@ -1,5 +1,4 @@
 const JWTModel = require('../../src/app/models/JWT');
-const UserModel = require('../../src/app/models/User');
 
 const factory = require('../../src/database/factory');
 const request = require('supertest');
@@ -16,8 +15,8 @@ describe('User', () => {
     let jwt = null;
 
     beforeAll(async (done) => {
-        await connection.migrate.rollback();
-        await connection.migrate.latest();
+        // await connection.migrate.rollback();
+        // await connection.migrate.latest();
         done();
     });
 

@@ -1,6 +1,6 @@
 const chance = require('chance').Chance()
 
-exports.user = (data) => {
+const user = (data) => {
     return {
         "name": chance.name(),
         "email": chance.email(),
@@ -8,3 +8,18 @@ exports.user = (data) => {
         ...data
     }
 }
+
+const tool = (data) => {
+    return {
+        "title": chance.name(),
+        "link": "localhost",
+        "description": chance.string(),
+        ...data
+    }
+}
+
+const tag = (data) => chance.string()
+
+exports.user = user;
+exports.tool = tool;
+exports.tag = tag;

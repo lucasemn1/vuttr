@@ -18,7 +18,7 @@ class Tag {
     static async create(tag) {
         const connection = openConnection();
         try{
-            const id = await connection('tags')
+            const [id] = await connection('tags')
                 .insert({tag});
 
             connection.destroy();
@@ -53,11 +53,12 @@ class Tag {
         try{
             const result = await connection('tags')
                 .select('*')
-                .where('tags.tag', 'LIKE', tag)
+                .where('tags.tag', '=', tag)
                 .first();
-
+            
             connection.destroy();
-            return result.id ? result.id: -1;
+            
+            return result ? result.id : -1;
         }
         catch(err){
             connection.destroy();
