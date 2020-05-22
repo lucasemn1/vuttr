@@ -3,13 +3,7 @@ const JWT = require('../models/JWT');
 
 module.exports = {
     async store(request, response) {
-        const userData = {
-            name: request.body.name,
-            email: request.body.email,
-            password: request.body.password
-        }
-
-        const userId = await User.create(userData);
+        const userId = await User.create(request.body);
 
         if( !userId ) {
             return response.status(500).json({ message: 'The user cannot be created.' });

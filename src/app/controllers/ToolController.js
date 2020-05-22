@@ -66,6 +66,6 @@ module.exports = {
             return response.status(500).json({ message: "Couldn't delete the tool." });
         }
 
-        return response.status(200).json({});
+        return response.status(200).json();
     }
 }

@@ -6,8 +6,6 @@ module.exports = async (request, response, next) => {
     const { userId } = jwt.decode(token);
     const toolId = request.params.id;
 
-    console.log(`${userId} - ${toolId}`);
-
     const connection = openConnection();
 
     const tool = await connection('tools')

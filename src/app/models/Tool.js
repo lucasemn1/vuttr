@@ -48,7 +48,12 @@ class Tool {
         const connection = openConnection();
         try{
             const tool = await connection('tools')
-                .select('*')
+                .select([
+                    'id',
+                    'title',
+                    'link',
+                    'description'
+                ])
                 .where('tools.id', '=', toolId)
                 .where('tools.userId', '=', userId)
                 .first();

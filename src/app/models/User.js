@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 const { openConnection } = require('../../database/connection');
 
 class User {
@@ -5,7 +6,11 @@ class User {
         const connection = openConnection();
 
         try{
-            const [ userId ] = await connection('users').insert(userData);
+            const [ userId ] = await connection('users').insert({
+                name: userData.name,
+                email: userData.email,
+                password: crypto.createHash('md5').update(userData.password).digest('hex')
+            });
             connection.destroy();
             return userId;
         }
@@ -38,6 +43,8 @@ class User {
     static async findWithCredentials(email, password) {
         const connection = openConnection();
 
+        password = crypto.createHash('md5').update(password).digest('hex')
+
         try{
             const user = await connection('users')
                 .select('*')
@@ -61,7 +68,11 @@ class User {
         try{
             await connection('users')
                 .where('id', '=', userId)
-                .update(userData);
+                .update({
+                    name: userData.name,
+                    email: userData.email,
+                    password: crypto.createHash('md5').update(userData.password).digest('hex')
+                });
 
             const user = this.find(userId);
             connection.destroy();
