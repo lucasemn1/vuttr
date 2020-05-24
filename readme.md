@@ -32,7 +32,22 @@ Caso você utilize o Yarn, execute:
 $ yarn knex migrate:latest
 ```
 
-3. Execute o servidor de desenvolvimento rodando o comando:
+3. Gere o arquivo .env rodando o comando:
+
+```
+$ npm run generate:key
+```
+
+Caso você utilize o Yarn, execute:
+
+```
+$ yarn generate:key
+```
+
+OBS.: Para executar localhost, altere a variável NODE_ENV para "development" no arquivo .env
+
+
+4. Execute o servidor de desenvolvimento rodando o comando:
 
 ```
 $ npm run dev
@@ -44,7 +59,7 @@ Caso você utilize o Yarn, execute:
 $ yarn dev
 ```
 
-4. Para executar o servidor sem ser monitorado pelo nodemon, execute:
+5. Para executar o servidor sem ser monitorado pelo nodemon, execute:
 
 ```
 $ npm run start
