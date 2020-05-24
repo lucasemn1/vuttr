@@ -19,7 +19,7 @@ class Tag {
         const connection = openConnection();
         try{
             const [id] = await connection('tags')
-                .insert({tag});
+                .insert({tag}).returning('id');
 
             connection.destroy();
             return id;

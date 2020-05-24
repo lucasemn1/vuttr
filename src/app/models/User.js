@@ -6,13 +6,13 @@ class User {
         const connection = openConnection();
 
         try{
-            const [ userId ] = await connection('users').insert({
+            const [id] = await connection('users').insert({
                 name: userData.name,
                 email: userData.email,
-                password: crypto.createHash('md5').update(userData.password).digest('hex')
-            });
-            connection.destroy();
-            return userId;
+                password: await crypto.createHash('md5').update(userData.password).digest('hex')
+            }).returning('id');
+
+            return id;
         }
         catch(err) {
             connection.destroy();

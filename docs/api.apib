@@ -1,0 +1,80 @@
+FORMAT: 1A
+
+# VUTTR
+
+Repositório de gerenciamento de ferramentas.
+Salve os links de seus sites e ferramentas online favoritas com o VUTTR!    
+
+## Account 
+
+### Create account [/user]
+
++ Request (application/json) to create an account 
+
+    + Body
+
+        {
+            "name": "your name here",
+            "email": "your email here",
+            "password": "your password here"
+        }
+
++ Response 201 (application/json)
+
+    + Body
+        {
+            "name": "name saved",
+            "email": "email saved",
+            "password": "password saved with hash layer",
+            "created_at": "time it was saved"
+            "updated_at": "time it was saved"
+        }
+
+### Show account data [GET]
+
++ Request (application/json) to create an account 
+
+    + Header
+
+        Authorizaton: JWT_TOKEN
+
++ Response 201 (application/json)
+
+    + Body
+        {
+            "name": "name saved",
+            "email": "email saved",
+            "password": "password saved with hash layer",
+            "created_at": "time it was saved"
+            "updated_at": "time it was saved"
+        }
+
+### Show account data [PUT]
+
++ Request (application/json) to create an account 
+
+    + Header
+
+        Authorizaton: JWT_TOKEN
+
+    + Body
+    
+        {
+            "name": "name saved",
+            "email": "email saved",
+            "password": "password saved with hash layer",
+            "created_at": "time it was saved"
+            "updated_at": "time it was saved"
+        }
+
++ Response 201 (application/json)
+
+    + Body
+
+        {
+            "name": "name saved",
+            "email": "email saved",
+            "password": "password saved with hash layer",
+            "created_at": "time it was saved"
+            "updated_at": "time it was saved"
+        }

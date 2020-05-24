@@ -4,6 +4,8 @@ dotenv.config({
   path: process.env.NODE_ENV !== 'test' ? '.env': '.env.test'
 })
 
+const migrationsPath = './src/database/migrations';
+
 module.exports = {
   test: {
     client: 'sqlite',
@@ -12,7 +14,7 @@ module.exports = {
     },
     migrations: {
       tableName: 'knex_migrations',
-      directory: './src/database/migrations'
+      directory: migrationsPath
     },
     seeds: {
       directory: './src/database/seeds'
@@ -28,7 +30,7 @@ module.exports = {
     },
     migrations: {
       tableName: 'knex_migrations',
-      directory: './src/database/migrations'
+      directory: migrationsPath
     },
     seeds: {
       directory: './src/database/seeds'
@@ -47,23 +49,21 @@ module.exports = {
       max: 10
     },
     migrations: {
-      tableName: 'knex_migrations'
+      tableName: 'knex_migrations',
+      directory: migrationsPath
     }
   },
 
   production: {
     client: 'postgresql',
-    connection: {
-      database: 'my_db',
-      user: 'username',
-      password: 'password'
-    },
+    connection: process.env.DATABASE_URL,
     pool: {
       min: 2,
       max: 10
     },
     migrations: {
-      tableName: 'knex_migrations'
+      tableName: 'knex_migrations',
+      directory: migrationsPath
     }
   }
 

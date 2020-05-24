@@ -32,7 +32,7 @@ class Tool {
                     link: toolData.link,
                     description: toolData.description,
                     userId: userId
-                })
+                }).returning('id');
 
             connection.destroy();
             return id;

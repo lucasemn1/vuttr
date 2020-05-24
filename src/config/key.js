@@ -7,11 +7,20 @@ function generateToken() {
 }
 
 function readFile() {
-    const localFile = path.join(__dirname, '..', '..', '.env');
+    try {
+        const localFile = path.join(__dirname, '..', '..', '.env');
 
-    let fileString = fs.readFileSync(localFile, 'utf8');
+        let fileString = fs.readFileSync(localFile, 'utf8');
 
-    return fileString;
+        return fileString;
+    }
+    catch(err) {
+        const localFile = path.join(__dirname, '..', '..', '.env.example');
+
+        let fileString = fs.readFileSync(localFile, 'utf8');
+
+        return fileString;
+    }
 }
 
 function saveFile(fileData) {

@@ -87,9 +87,8 @@ describe('User', () => {
         const response = await request(app)
             .delete(`/tools/1`)
             .set('Authorization', jwt.token)
-            .set('Accept', 'application/json')
-            .expect('Content-Type', /json/);
+            .set('Accept', 'application/json');
 
-        expect(response.status).toBe(200);
+        expect(response.status).toBe(204);
     });
 })

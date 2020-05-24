@@ -46,9 +46,9 @@ module.exports = {
         const { userId } = JWT.getPayload(request.headers.authorization);
 
         if( await User.delete(userId) ) {
-            return response.status(200).json({});
+            return response.status(204).json();
         }
 
-        return response.status(500).json({});
+        return response.status(500).json();
     }
 }
