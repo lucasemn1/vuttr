@@ -4,7 +4,8 @@
 
 1. NodeJS 12.x
 2. NPM 
-2. MySQL 
+3. MySQL (local)
+4. Postgres (production)
 
 ## Instalação 📝
 
